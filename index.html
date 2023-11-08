@@ -9,11 +9,25 @@
     <div class="page-wrapper">
       <div class="add-task">
         <input id="userInput" type="text" />
+        <input id="userDate" type="date" />
+        <label for="priority">Task Priority:</label>
+        <select name="priority" id="priority">
+          <option value="2">High</option>
+          <option value="1">Medium</option>
+          <option value="0">Low</option>
+        </select>
         <button id="submitInput">Add Task</button>
-        <button id="clearTasks">Get Tasks</button>
+        <button id="clearTasks">clear Tasks</button>
+        <button class="noPriority" id="filterPriority">
+          Filter by Priority
+        </button>
+        <button class="notFiltered" id="filterDate">Filter by Date</button>
+        <button id="filterActive">Active Tasks</button>
+        <button id="filterCompleted">Completed Tasks</button>
+        <button id="filterAll">All Tasks</button>
       </div>
       <div>
-        <ul id="allTasks"></ul>
+        <div id="allTasks"></div>
       </div>
     </div>
     <script src="./task_manager.js"></script>
