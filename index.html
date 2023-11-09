@@ -3,33 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/styles.css" />
     <title>Document</title>
   </head>
   <body>
-    <div class="page-wrapper">
-      <div class="add-task">
-        <input id="userInput" type="text" />
-        <input id="userDate" type="date" />
-        <label for="priority">Task Priority:</label>
-        <select name="priority" id="priority">
-          <option value="2">High</option>
-          <option value="1">Medium</option>
-          <option value="0">Low</option>
-        </select>
-        <button id="submitInput">Add Task</button>
-        <button id="clearTasks">clear Tasks</button>
-        <button class="noPriority" id="filterPriority">
-          Filter by Priority
-        </button>
-        <button class="notFiltered" id="filterDate">Filter by Date</button>
-        <button id="filterActive">Active Tasks</button>
-        <button id="filterCompleted">Completed Tasks</button>
-        <button id="filterAll">All Tasks</button>
+    <div class="pageWrapper">
+      <div class="inputsFiltersContainer">
+        <div class="taskInputsFilters">
+          <div class="filters">
+            <div class="filterPriorityDateContiner">
+              <button class="noPriority" id="filterPriority">
+                Filter by Priority
+              </button>
+              <button class="notFiltered" id="filterDate">
+                Filter by Date
+              </button>
+            </div>
+            <div class="filterActivity">
+              <button id="filterActive">Active Tasks</button>
+              <button id="filterCompleted">Completed Tasks</button>
+              <button id="filterAll">All Tasks</button>
+            </div>
+          </div>
+          <div class="addTask">
+            <input id="userInput" type="text" />
+            <input id="userDate" type="date" />
+
+            <select name="priority" id="priority">
+              <option value="2">High</option>
+              <option value="1">Medium</option>
+              <option value="0">Low</option>
+            </select>
+            <button id="submitInput">Add Task</button>
+          </div>
+
+          <button id="clearTasks">clear Tasks</button>
+        </div>
       </div>
-      <div>
-        <div id="allTasks"></div>
+      <div class="tasksWrapper">
+        <div class="allTasks" id="allTasks"></div>
       </div>
     </div>
-    <script src="./task_manager.js"></script>
+    <script src="./scripts/task_manager.js"></script>
   </body>
 </html>

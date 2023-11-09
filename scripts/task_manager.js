@@ -32,12 +32,19 @@ function rearrangeTasks(tasks) {
     const taskText = document.createElement("div");
     taskText.innerHTML = `<div>${task.content}</div><div>${task.date}</div>`;
     const taskOptions = document.createElement("div");
+    taskOptions.classList.add("taskOptions");
+    taskText.classList.add("taskText");
+
+    dateNode = document.createElement("div");
+    dateNode.textContent = task.date;
+    taskOptions.appendChild(dateNode);
 
     addDeleteButton(taskOptions);
     addCompleteTask(taskOptions);
     editTaskName(taskOptions);
 
     const wholetask = document.createElement("div");
+    wholetask.classList.add("taskItem");
 
     wholetask.appendChild(taskText);
     wholetask.appendChild(taskOptions);
@@ -64,7 +71,7 @@ function addTask() {
 
   const uniqueId = new Date().getTime();
   const taskText = document.createElement("div");
-  taskText.innerHTML = `<div>${userInput.value}</div><div>${userDate.value}</div>`;
+  taskText.innerHTML = `<div>${userInput.value}</div>`;
   const taskOptions = document.createElement("div");
   tasks.push({
     id: uniqueId,
@@ -73,15 +80,22 @@ function addTask() {
     date: userDate.value,
     priority: userPriority.value,
   });
-
+  dateNode = document.createElement("div");
+  dateNode.textContent = userDate.value;
+  taskOptions.appendChild(dateNode);
   addDeleteButton(taskOptions);
   addCompleteTask(taskOptions);
   editTaskName(taskOptions);
+
+  taskOptions.classList.add("taskOptions");
+  taskText.classList.add("taskText");
 
   const task = document.createElement("div");
   task.setAttribute("id", uniqueId);
   task.appendChild(taskText);
   task.appendChild(taskOptions);
+
+  task.classList.add("taskItem");
 
   allTasks.appendChild(task);
   userInput.value = "";
@@ -162,6 +176,7 @@ function editTask(button) {
     let taskItem = button.target.parentNode.parentNode.firstChild;
     let taskList = taskItem.parentNode;
     let editMode = document.createElement("div");
+    editMode.classList.add();
     editMode.textContent = taskItem.value;
     taskList.replaceChild(editMode, taskItem);
   }
