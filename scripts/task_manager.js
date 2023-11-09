@@ -1,3 +1,4 @@
+// get elements
 const userInput = document.getElementById("userInput");
 const userDate = document.getElementById("userDate");
 const submitInput = document.getElementById("submitInput");
@@ -10,6 +11,7 @@ const filterActive = document.getElementById("filterActive");
 const filterCompleted = document.getElementById("filterCompleted");
 const filterAll = document.getElementById("filterAll");
 
+// add event listners
 clearTasks.addEventListener("click", deleteAll);
 filterDate.addEventListener("click", filterByDate);
 filterPriority.addEventListener("click", filterByPriority);
@@ -18,42 +20,14 @@ filterActive.addEventListener("click", filterByActiveTasks);
 filterCompleted.addEventListener("click", filterByCompletedTasks);
 filterAll.addEventListener("click", filterByAllTasks);
 
+// initialize arrays for sorting
 let tasks = [];
 let sortedDate = [];
 let sortedPriority = [];
-let sortedActive = [];
-let sortedCompleted = [];
 
-// getTasks.addEventListener("click", loadTasks);
-
-function rearrangeTasks(tasks) {
-  allTasks.textContent = "";
-  tasks.forEach(function (task) {
-    const taskText = document.createElement("div");
-    taskText.innerHTML = `<div>${task.content}</div><div>${task.date}</div>`;
-    const taskOptions = document.createElement("div");
-    taskOptions.classList.add("taskOptions");
-    taskText.classList.add("taskText");
-
-    dateNode = document.createElement("div");
-    dateNode.textContent = task.date;
-    taskOptions.appendChild(dateNode);
-
-    addDeleteButton(taskOptions);
-    addCompleteTask(taskOptions);
-    editTaskName(taskOptions);
-
-    const wholetask = document.createElement("div");
-    wholetask.classList.add("taskItem");
-
-    wholetask.appendChild(taskText);
-    wholetask.appendChild(taskOptions);
-
-    allTasks.appendChild(wholetask);
-  });
-}
-
+// function to add a task
 function addTask() {
+  // check if empty inputs or if active filters
   if (userInput.value == "" || userDate.value == "") {
     alert("please add a valid task");
     return;
@@ -68,11 +42,12 @@ function addTask() {
     filterPriority.textContent = "Filter by Priority";
     sortedPriority = [];
   }
-
-  const uniqueId = new Date().getTime();
+  // create child for text display
   const taskText = document.createElement("div");
   taskText.innerHTML = `<div>${userInput.value}</div>`;
-  const taskOptions = document.createElement("div");
+
+  // logic for list objects
+  const uniqueId = new Date().getTime();
   tasks.push({
     id: uniqueId,
     active: true,
@@ -80,13 +55,18 @@ function addTask() {
     date: userDate.value,
     priority: userPriority.value,
   });
+
+  // child for buttons and task options
+  const taskOptions = document.createElement("div");
   dateNode = document.createElement("div");
   dateNode.textContent = userDate.value;
   taskOptions.appendChild(dateNode);
-  addDeleteButton(taskOptions);
-  addCompleteTask(taskOptions);
-  editTaskName(taskOptions);
 
+  addDeleteButton(taskOptions);
+  editTaskName(taskOptions);
+  addCompleteTask(taskOptions);
+
+  // append children to parent
   taskOptions.classList.add("taskOptions");
   taskText.classList.add("taskText");
 
@@ -99,6 +79,34 @@ function addTask() {
 
   allTasks.appendChild(task);
   userInput.value = "";
+}
+
+// same logic as add task but it can take a list and display it according to sorting
+function rearrangeTasks(tasks) {
+  allTasks.textContent = "";
+  tasks.forEach(function (task) {
+    const taskText = document.createElement("div");
+    taskText.innerHTML = `<div>${task.content}</div>`;
+    const taskOptions = document.createElement("div");
+    taskOptions.classList.add("taskOptions");
+    taskText.classList.add("taskText");
+
+    dateNode = document.createElement("div");
+    dateNode.textContent = task.date;
+    taskOptions.appendChild(dateNode);
+
+    addDeleteButton(taskOptions);
+    editTaskName(taskOptions);
+    addCompleteTask(taskOptions);
+
+    const wholetask = document.createElement("div");
+    wholetask.classList.add("taskItem");
+
+    wholetask.appendChild(taskText);
+    wholetask.appendChild(taskOptions);
+
+    allTasks.appendChild(wholetask);
+  });
 }
 
 function addDeleteButton(element) {
@@ -176,7 +184,7 @@ function editTask(button) {
     let taskItem = button.target.parentNode.parentNode.firstChild;
     let taskList = taskItem.parentNode;
     let editMode = document.createElement("div");
-    editMode.classList.add();
+    editMode.classList.add("taskText");
     editMode.textContent = taskItem.value;
     taskList.replaceChild(editMode, taskItem);
   }
@@ -185,8 +193,6 @@ function editTask(button) {
 function filterByDate() {
   sortedDate = [...tasks];
   sortedDate.sort(function (a, b) {
-    // Turn your strings into dates, and then subtract them
-    // to get a value that is either negative, positive, or zero.
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
     return dateA - dateB;
@@ -209,8 +215,6 @@ function filterByDate() {
 function filterByPriority() {
   sortedPriority = [...tasks];
   sortedPriority.sort(function (a, b) {
-    // Turn your strings into dates, and then subtract them
-    // to get a value that is either negative, positive, or zero.
     const A = a.priority;
     const B = b.priority;
     return A - B;
@@ -230,7 +234,7 @@ function filterByPriority() {
   }
 }
 
-function filterByActiveTasks() {
+function filterByCompletedTasks() {
   elements = document.getElementsByClassName("active");
   for (let i = 0; i < elements.length; i++) {
     elements[i].parentElement.parentElement.style.display = "none";
@@ -241,7 +245,7 @@ function filterByActiveTasks() {
   }
 }
 
-function filterByCompletedTasks() {
+function filterByActiveTasks() {
   elements = document.getElementsByClassName("completed");
   for (let i = 0; i < elements.length; i++) {
     elements[i].parentElement.parentElement.style.display = "none";
